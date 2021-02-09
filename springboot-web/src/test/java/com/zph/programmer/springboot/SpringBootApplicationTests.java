@@ -10,6 +10,5 @@ class SpringBootApplicationTests {
 	@Test
 	public void contextLoads() {
 		System.out.println("Load success");
-
 	}
 }
