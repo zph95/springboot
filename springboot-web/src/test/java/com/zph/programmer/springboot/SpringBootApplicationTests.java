@@ -1,13 +1,15 @@
 package com.zph.programmer.springboot;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringbootApplicationTests {
+class SpringBootApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
+	public void contextLoads() {
+		System.out.println("Load success");
 
+	}
 }
