@@ -50,6 +50,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <version>1.18.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zph.programmer</groupId>
+            <artifactId>springboot-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

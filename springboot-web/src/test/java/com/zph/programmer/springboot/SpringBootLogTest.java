@@ -41,11 +41,11 @@ public class SpringBootLogTest  extends SpringBootApplicationTests {
     @Test
     public void cacheTest(){
         try {
-            TestCtrl testCtrl = new TestCtrl(testService, cacheService);
+            TestCtrl testCtrl = new TestCtrl(cacheService);
             testCtrl.testCachePost(new CacheService.KeyValue("test-cache", "测试缓存"));
-            Assert.isTrue("测试缓存".equals(testCtrl.testCacheGet("test-cache")), "缓存取值错误");
+            Assert.isTrue("测试缓存".equals(testCtrl.testCacheGet("test-cache").getData()), "缓存取值错误");
             testCtrl.testCachePut(new CacheService.KeyValue("test-cache", "更新缓存"));
-            Assert.isTrue("更新缓存".equals(testCtrl.testCacheGet("test-cache")), "缓存取值错误");
+            Assert.isTrue("更新缓存".equals(testCtrl.testCacheGet("test-cache").getData()), "缓存取值错误");
             testCtrl.testCacheDelete("test-cache");
         }catch (Exception e){
             log.error("缓存测试失败 e",e);
