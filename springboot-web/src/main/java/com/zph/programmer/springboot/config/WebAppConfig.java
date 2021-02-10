@@ -1,4 +1,4 @@
-package com.zph.programmer.springboot.conf;
+package com.zph.programmer.springboot.config;
 
 
 import com.zph.programmer.springboot.filter.HttpServletRequestWrapperFilter;
