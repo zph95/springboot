@@ -22,14 +22,7 @@ import java.util.*;
 @Slf4j
 @Component
 public class LogAspect {
-    /**
-     * Service层切点
-     * 注意修改包路径
-     */
-    @Pointcut("@annotation(com.zph.programmer.springboot.annotation.ServiceLog)")
-    public void serviceAspect() {
 
-    }
 
     /**
      * Controller层切点
@@ -61,30 +54,7 @@ public class LogAspect {
         return map;
     }
 
-    /**
-     * 获取注解中对方法的描述信息 用于service层注解
-     *
-     * @param joinPoint 切点
-     * @return 方法描述
-     */
-    private static String getServiceMethodDescription(JoinPoint joinPoint) throws Exception {
-        String targetName = joinPoint.getTarget().getClass().getName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] arguments = joinPoint.getArgs();
-        Class targetClass = Class.forName(targetName);
-        Method[] methods = targetClass.getMethods();
-        String description = "";
-        for (Method method : methods) {
-            if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
-                    description = method.getAnnotation(ServiceLog.class).value();
-                    break;
-                }
-            }
-        }
-        return description;
-    }
+
 
     /**
      * 获取注解中对方法的描述信息 用于Controller层注解
@@ -163,7 +133,7 @@ public class LogAspect {
                     "********************************* " + className + "#" + method + "请求\n" +
                     "Description   :  " + methodDescription + "\n" +
                     "ContentType   :  " + (("".equals(request.getContentType()) || request.getContentType() == null) ? "FROM" : request.getContentType()) + "\n" +
-                    "ServerAddres  :  " + "(" + request.getMethod() + ")" + "\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+                    "ServerAddress :  " + "(" + request.getMethod() + ")" + "\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
                     + request.getRequestURI().substring(0, Math.min(request.getRequestURI().length(), 255)) +
                     "RequestParams :  " + (("".equals(decode.toString())) ? methodParam : methodParamMap) + "\n" +
                     "********************************* " + LocalDateTime.now().toString() + "\n";
@@ -183,71 +153,5 @@ public class LogAspect {
         log.info("\n********************************* " + className + "#" + method + "方法执行结束");
     }
 
-    /**
-     * 前置通知 用于拦截Service层记录用户的操作
-     *
-     * @param joinPoint 切点
-     */
-    @Before("serviceAspect()")
-    public void doServiceBefore(JoinPoint joinPoint) {
-        try {
-            //类名
-            String className = joinPoint.getTarget().getClass().getName();
-            //请求方法
-            String method = joinPoint.getSignature().getName() + "()";
-            //方法参数
-            String methodParam = Arrays.toString(joinPoint.getArgs());
 
-            //方法描述
-            String methodDescription = getServiceMethodDescription(joinPoint);
-            String sb = "\n********************************* " + className + "#" + method + "服务\n" +
-                    "Description   :  " + methodDescription + "\n" +
-                    "RequestParams :  " + methodParam + "\n" +
-                    "********************************* " + LocalDateTime.now().toString() + "\n";
-            log.info(sb);
-        } catch (Exception e) {
-            log.warn("拦截Service层记录用户的操作:",e);
-        }
-    }
-
-    @AfterReturning(returning = "ret", pointcut = "serviceAspect()")
-    public void doAfterServiceReturning(JoinPoint joinPoint, Object ret) {
-        //类名
-        String className = joinPoint.getTarget().getClass().getName();
-        //请求方法
-        String method = joinPoint.getSignature().getName() + "()";
-        // 处理完请求，返回内容
-        log.info("\n********************************* " + className + "#" + method + "方法执行结束");
-    }
-
-    /**
-     * 异常通知 用于拦截service层记录异常日志
-     */
-    @AfterThrowing(pointcut = "serviceAspect()", throwing = "ex")
-    public void doAfterThrowing(JoinPoint joinPoint, Throwable ex) {
-        try {
-            //类名
-            String className = joinPoint.getTarget().getClass().getName();
-            //请求方法
-            String method = (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
-            //方法描述
-            String methodDescription = getServiceMethodDescription(joinPoint);
-            //获取用户请求方法的参数并序列化为JSON格式字符串
-            StringBuilder params = new StringBuilder();
-            if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
-                for (int i = 0; i < joinPoint.getArgs().length; i++) {
-                    params.append(joinPoint.getArgs()[i]).append(";");
-                }
-            }
-            String sb = "\n********************************* " + className + "#" + method + "方法执行异常\n" +
-                    "Description      :  " + methodDescription + "\n" +
-                    "Params           :  " + "[" + params.toString() + "]" + "\n" +
-                    "ExceptionName    :  " + ex.getClass().getName() + "\n" +
-                    "ExceptionMessage :  " + ex.getMessage() + "\n" +
-                    "********************************* OVER\n";
-            log.error(sb,ex);
-        } catch (Exception e1) {
-            log.warn("拦截service层记录异常日志 : ",e1);
-        }
-    }
 }

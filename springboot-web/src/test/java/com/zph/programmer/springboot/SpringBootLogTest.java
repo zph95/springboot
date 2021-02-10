@@ -1,7 +1,9 @@
 package com.zph.programmer.springboot;
 
+import com.zph.programmer.springboot.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public class SpringBootLogTest  extends SpringBootApplicationTests{
@@ -16,5 +18,12 @@ public class SpringBootLogTest  extends SpringBootApplicationTests{
         log.info("这是info日志...");
         log.warn("这是warn日志...");
         log.error("这是error日志...");
+    }
+
+    @Autowired
+    private TestService testService;
+    @Test
+    public void pointLogTest(){
+        testService.testServiceLog("测试参数");
     }
 }
