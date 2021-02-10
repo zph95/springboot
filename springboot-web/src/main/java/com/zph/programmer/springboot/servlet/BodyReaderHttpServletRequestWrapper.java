@@ -12,7 +12,7 @@ import java.io.*;
 @Slf4j
 public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Getter
-    private  String body;
+    private final String body;
 
     public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
@@ -23,7 +23,7 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 char[] charBuffer = new char[128];
-                int bytesRead = -1;
+                int bytesRead;
                 while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
                     stringBuilder.append(charBuffer, 0, bytesRead);
                 }

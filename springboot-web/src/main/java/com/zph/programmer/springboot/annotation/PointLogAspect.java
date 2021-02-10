@@ -111,13 +111,13 @@ public class PointLogAspect {
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] arguments = joinPoint.getArgs();
-        Class targetClass = Class.forName(targetName);
+        Class<?> targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
         String description = "";
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
+                Class<?>[] clazz = method.getParameterTypes();
+                if (clazz.length == arguments.length) {
                     description = method.getAnnotation(PointLog.class).value();
                     break;
                 }

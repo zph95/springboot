@@ -1,12 +1,20 @@
 package com.zph.programmer.springboot;
 
+import com.zph.programmer.springboot.cache.CacheService;
+import com.zph.programmer.springboot.controller.TestCtrl;
 import com.zph.programmer.springboot.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 @Slf4j
-public class SpringBootLogTest  extends SpringBootApplicationTests{
+public class SpringBootLogTest  extends SpringBootApplicationTests {
+    @Autowired
+    private TestService testService;
+    @Autowired
+    private CacheService cacheService;
+
     @Test
     public void logTest() {
         //日志的级别；
@@ -20,8 +28,6 @@ public class SpringBootLogTest  extends SpringBootApplicationTests{
         log.error("这是error日志...");
     }
 
-    @Autowired
-    private TestService testService;
     @Test
     public void pointLogTest(){
         try {
@@ -29,6 +35,21 @@ public class SpringBootLogTest  extends SpringBootApplicationTests{
             testService.testPointLog(null);
         } catch (Exception e) {
             log.info("测试日志注解");
+        }
+    }
+
+    @Test
+    public void cacheTest(){
+        try {
+            TestCtrl testCtrl = new TestCtrl(testService, cacheService);
+            testCtrl.testCachePost(new CacheService.KeyValue("test-cache", "测试缓存"));
+            Assert.isTrue("测试缓存".equals(testCtrl.testCacheGet("test-cache")), "缓存取值错误");
+            testCtrl.testCachePut(new CacheService.KeyValue("test-cache", "更新缓存"));
+            Assert.isTrue("更新缓存".equals(testCtrl.testCacheGet("test-cache")), "缓存取值错误");
+            testCtrl.testCacheDelete("test-cache");
+        }catch (Exception e){
+            log.error("缓存测试失败 e",e);
+            Assert.isTrue(false,"缓存测试失败");
         }
     }
 }

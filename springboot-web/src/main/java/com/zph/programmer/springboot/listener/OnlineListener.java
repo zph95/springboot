@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 /**
- * @description:  ServletRequestListener、 HttpSessionListener 、ServletContextListener ......
- * 可直接在MyListener类上使用@WebListener注解,入口类加上@ServletComponentScan即可
+ *  ServletRequestListener、 HttpSessionListener 、ServletContextListener ......
+ * 监听器
  */
 @Slf4j
 public class OnlineListener implements HttpSessionListener {

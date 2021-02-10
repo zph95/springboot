@@ -1,19 +1,16 @@
 package com.zph.programmer.springboot.cache.impl;
 
 import com.zph.programmer.springboot.cache.CacheService;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
-@Slf4j
 @Service
 public class CacheServiceImpl implements CacheService {
 
     private final static String cacheName="spring-boot-demo-cache";
-    @Resource
+    @Autowired
     private CacheManager cacheManager;
 
     @Override

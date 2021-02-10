@@ -1,10 +1,17 @@
 package com.zph.programmer.springboot.cache;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 public interface CacheService {
 
-    class keyValue{
-        public String key;
-        public String value;
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    class KeyValue {
+        private String key;
+        private String value;
     }
 
     String get(String key)throws Exception;
