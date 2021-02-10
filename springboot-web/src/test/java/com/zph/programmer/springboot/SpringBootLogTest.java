@@ -24,6 +24,11 @@ public class SpringBootLogTest  extends SpringBootApplicationTests{
     private TestService testService;
     @Test
     public void pointLogTest(){
-        testService.testServiceLog("测试参数");
+        try {
+            testService.testPointLog("测试参数");
+            testService.testPointLog(null);
+        } catch (Exception e) {
+            log.info("测试日志注解");
+        }
     }
 }

@@ -11,10 +11,15 @@ import java.util.Map;
 public class TestService {
 
     @PointLog("测试注解@PointLog")
-    public Map<String,String> testServiceLog(String param) {
-        log.info("param={}", param);
-        Map<String,String> result=new HashMap<>();
-        result.put("200","success");
-        return result;
+    public Map<String,String> testPointLog(String param) throws Exception{
+        if(param==null){
+            throw new Exception("参数为空");
+        }
+        else{
+            log.info("param={}", param);
+            Map<String,String> result=new HashMap<>();
+            result.put("200","success");
+            return result;
+        }
     }
 }

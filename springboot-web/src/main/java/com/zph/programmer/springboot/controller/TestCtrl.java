@@ -15,6 +15,10 @@ public class TestCtrl {
 
     @GetMapping(value = "/testLog")
     public Map<String,String> testControllerLog(@RequestParam("param") String param){
-        return testService.testServiceLog(param);
+        try {
+            return testService.testPointLog(param);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
