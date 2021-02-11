@@ -1,8 +1,8 @@
 package com.zph.programmer.springboot.config;
 
 
-import com.zph.programmer.springboot.filter.HttpServletRequestWrapperFilter;
-import com.zph.programmer.springboot.interceptor.RestLogInterceptor;
+import com.zph.programmer.springboot.filter.HttpServletWrapperFilter;
+import com.zph.programmer.springboot.interceptor.OnlineInterceptor;
 import com.zph.programmer.springboot.listener.OnlineListener;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -15,24 +15,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebAppConfig implements WebMvcConfigurer {
 
     /**
-     * 注册拦截器
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RestLogInterceptor()).addPathPatterns("/**");
-    }
-
-    /**
      * 注册过滤器
      * @return
      */
     @Bean
-    public FilterRegistrationBean<HttpServletRequestWrapperFilter> filterRegistry() {
-        FilterRegistrationBean<HttpServletRequestWrapperFilter> frBean = new FilterRegistrationBean<>();
-        frBean.setFilter(new HttpServletRequestWrapperFilter());
-//        frBean.setOrder(1);//多个过滤器时指定过滤器的执行顺序
-        frBean.addUrlPatterns("/**");
+    public FilterRegistrationBean<HttpServletWrapperFilter> filterRegistry() {
+        FilterRegistrationBean<HttpServletWrapperFilter> frBean = new FilterRegistrationBean<>();
+        frBean.setFilter(new HttpServletWrapperFilter());
+        frBean.setOrder(1);//多个过滤器时指定过滤器的执行顺序
+        frBean.addUrlPatterns("/*");
         return frBean;
+    }
+
+    /**
+     * 注册拦截器
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new OnlineInterceptor()).addPathPatterns("/**");
     }
 
     /**

@@ -10,31 +10,24 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 @Slf4j
-public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class BodyReaderRequestWrapper extends HttpServletRequestWrapper {
     @Getter
-    private final String body;
+    private String body=null;
 
-    public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
+    public BodyReaderRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
-        BufferedReader bufferedReader = null;
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            InputStream inputStream = request.getInputStream();
-            if (inputStream != null) {
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        if (request.getInputStream() != null) {
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
+                StringBuilder stringBuilder = new StringBuilder();
                 char[] charBuffer = new char[128];
                 int bytesRead;
                 while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
                     stringBuilder.append(charBuffer, 0, bytesRead);
                 }
-            }
-            body = stringBuilder.toString();
-        } catch (Exception ex) {
-            log.error("获取请求体body异常：",ex);
-            throw ex;
-        } finally {
-            if (bufferedReader != null) {
-                bufferedReader.close();
+                body = stringBuilder.toString();
+            } catch (Exception ex) {
+                log.error("获取请求体body异常：", ex);
+                throw ex;
             }
         }
     }
