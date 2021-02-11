@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 @Slf4j
-public class BodyReaderRequestWrapper extends HttpServletRequestWrapper {
+public class BodyRequestWrapper extends HttpServletRequestWrapper {
     @Getter
     private String body=null;
 
-    public BodyReaderRequestWrapper(HttpServletRequest request) throws IOException {
+    public BodyRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         if (request.getInputStream() != null) {
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
@@ -50,7 +50,6 @@ public class BodyReaderRequestWrapper extends HttpServletRequestWrapper {
             public void setReadListener(ReadListener readListener) {
 
             }
-
             @Override
             public int read() {
                 return byteArrayInputStream.read();
@@ -62,6 +61,4 @@ public class BodyReaderRequestWrapper extends HttpServletRequestWrapper {
     public BufferedReader getReader() {
         return new BufferedReader(new InputStreamReader(this.getInputStream()));
     }
-
-
 }

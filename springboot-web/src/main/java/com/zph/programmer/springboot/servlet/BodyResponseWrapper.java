@@ -1,6 +1,6 @@
 package com.zph.programmer.springboot.servlet;
-import lombok.extern.slf4j.Slf4j;
 
+import lombok.extern.slf4j.Slf4j;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletResponse;
@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.*;
 
 @Slf4j
-public class BodyReaderResponseWrapper extends HttpServletResponseWrapper {
+public class BodyResponseWrapper extends HttpServletResponseWrapper {
     private final ByteArrayOutputStream output;
 
-    public BodyReaderResponseWrapper(HttpServletResponse response) {
+    public BodyResponseWrapper(HttpServletResponse response) {
         super(response);
         output = new ByteArrayOutputStream();
     }
