@@ -1,6 +1,5 @@
 package com.zph.programmer.springboot.utils;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -31,8 +30,4 @@ public class SpringBeanUtils implements ApplicationContextAware {
     public static <T> T getBean(Class<T> clazz, String name) {
         return context.getBean(name, clazz);
     }
-
-
-
-
 }

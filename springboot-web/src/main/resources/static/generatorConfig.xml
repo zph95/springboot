@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+    <!-- 驱动程序路径 -->
     <classPathEntry location="lib/sqlite-jdbc-3.34.0.jar" />
 
     <context id="SQLiteTables" targetRuntime="MyBatis3Simple">
@@ -40,7 +41,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" tableName="Rest_Call_Log_Record" domainObjectName="RestCallLogRecord"
+        <table tableName="rest_call_log_record" domainObjectName="RestCallLogRecord"
                enableDeleteByPrimaryKey="false"
                enableUpdateByPrimaryKey="true"
                enableSelectByPrimaryKey="true"
