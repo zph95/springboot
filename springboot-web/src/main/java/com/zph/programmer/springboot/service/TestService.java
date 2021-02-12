@@ -1,14 +1,17 @@
 package com.zph.programmer.springboot.service;
+import com.zph.programmer.springboot.dao.RestCallLogRecordMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import com.zph.programmer.springboot.annotation.PointLog;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
 public class TestService {
+
 
     @PointLog("测试注解@PointLog")
     public Map<String,String> testPointLog(String param) throws Exception{

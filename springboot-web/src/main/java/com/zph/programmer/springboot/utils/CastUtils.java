@@ -40,7 +40,7 @@ public class CastUtils {
 
     public static void main(String[] args) {
         List<String> list=new ArrayList<>();
-        list.add("test");
+        list.add("src/main/profile/test");
         Object objList = list;
         List<String> arrys = castList(objList, String.class);
         for (String once : arrys) {

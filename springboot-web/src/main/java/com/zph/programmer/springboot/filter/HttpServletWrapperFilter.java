@@ -1,8 +1,13 @@
 package com.zph.programmer.springboot.filter;
 
+import com.zph.programmer.api.enums.RestCallLogStatus;
+import com.zph.programmer.springboot.dao.RestCallLogRecordMapper;
+import com.zph.programmer.springboot.po.RestCallLogRecord;
 import com.zph.programmer.springboot.servlet.BodyRequestWrapper;
 import com.zph.programmer.springboot.servlet.BodyResponseWrapper;
+import com.zph.programmer.springboot.utils.SpringBeanUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +20,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 public class HttpServletWrapperFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("init filter 打印REST接口日志过滤器");
@@ -22,6 +28,7 @@ public class HttpServletWrapperFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        RestCallLogRecordMapper restCallLogRecordMapper= SpringBeanUtils.getBean(RestCallLogRecordMapper.class);
         BodyRequestWrapper requestWrapper = null;
         HttpServletRequest httpServletRequest = null;
         BodyResponseWrapper responseWrapper = null;
@@ -34,6 +41,7 @@ public class HttpServletWrapperFilter implements Filter {
             httpServletResponse = (HttpServletResponse) response;
             responseWrapper = new BodyResponseWrapper(httpServletResponse);
         }
+        RestCallLogRecord record=new RestCallLogRecord();
         if (httpServletRequest != null) {
             StringBuilder requestParamsBuilder = new StringBuilder();
             if (httpServletRequest.getQueryString() != null) {
@@ -43,13 +51,17 @@ public class HttpServletWrapperFilter implements Filter {
                 //针对body入参
                 requestParamsBuilder.append(requestWrapper.getBody());
             }
+            String url=httpServletRequest.getScheme() + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort()
+                    + httpServletRequest.getRequestURI();
             String sb = "\n********************************* " + LocalDateTime.now().toString() + "\n" +
-                    "ServerAddress :  " + httpServletRequest.getScheme() + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort()
-                    + httpServletRequest.getRequestURI() + " " + httpServletRequest.getMethod() + "\n" +
+                    "ServerAddress :  " + url +"  "+ httpServletRequest.getMethod() + "\n" +
                     "ContentType   :  " + httpServletRequest.getContentType() + "\n" +
                     "RequestParams :  " + requestParamsBuilder.toString() + "\n" +
                     "********************************* Request\n";
             log.info(sb);
+            record.setUri(url).setMethod(httpServletRequest.getMethod()).setRequest(requestParamsBuilder.toString())
+                    .setStatus(RestCallLogStatus.Start.getCode());
+            restCallLogRecordMapper.insert(record);
         }
         Long start = System.currentTimeMillis();
         chain.doFilter(requestWrapper != null ? requestWrapper : request,
@@ -63,6 +75,9 @@ public class HttpServletWrapperFilter implements Filter {
                     "Response      :  " + body + "\n" +
                     "********************************* Response cost=" + (end - start) + "ns \n";
             log.info(sb);
+            record.setResponse(body).setCostTime(end - start)
+                    .setStatus(httpServletResponse.getStatus());
+            restCallLogRecordMapper.updateByPrimaryKey(record);
             //重新 writer 返回值，重要！！！
             response.getOutputStream().write(body.getBytes());
         }

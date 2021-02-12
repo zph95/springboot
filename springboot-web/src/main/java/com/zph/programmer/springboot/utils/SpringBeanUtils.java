@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringBeanUtils implements ApplicationContextAware {
 
-    private static ApplicationContext applicationContext;
+    private static ApplicationContext context;
 
     /**
      * 获取应用上下文并获取相应的接口实现类
@@ -20,12 +20,16 @@ public class SpringBeanUtils implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
-        SpringBeanUtils.applicationContext = applicationContext;
+        SpringBeanUtils.context = applicationContext;
 
     }
 
-    public static Object getBean(String name) throws BeansException {
-        return applicationContext.getBean(name);
+    public static <T> T getBean(Class<T> clazz) {
+        return context.getBean(clazz);
+    }
+
+    public static <T> T getBean(Class<T> clazz, String name) {
+        return context.getBean(name, clazz);
     }
 
 
