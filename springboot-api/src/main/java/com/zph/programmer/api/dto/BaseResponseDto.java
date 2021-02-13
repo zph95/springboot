@@ -48,14 +48,19 @@ public class BaseResponseDto<T> {
         this.message=message;
     }
 
-    public static <T> BaseResponseDto<T> success(Integer code,T data){
-        return new BaseResponseDto<>(code,success,null,  data);
+    public static <T> BaseResponseDto<T> success(Integer code, T data) {
+        return new BaseResponseDto<>(code, success, null, data);
     }
 
-    public static <T> BaseResponseDto<T> fail(Integer code,String message,T data){
-        return new BaseResponseDto<>(code,fail,message,  data);
+    public static <T> BaseResponseDto<T> fail(Integer code, String message, T data) {
+        return new BaseResponseDto<>(code, fail, message, data);
     }
-    public static <T> BaseResponseDto<T> error(Integer code,String message,T data){
-        return new BaseResponseDto<>(code,error,message, data);
+
+    public static <T> BaseResponseDto<T> error(Integer code, String message, T data) {
+        return new BaseResponseDto<>(code, error, message, data);
+    }
+
+    public boolean isSuccess() {
+        return success.equals(status);
     }
 }

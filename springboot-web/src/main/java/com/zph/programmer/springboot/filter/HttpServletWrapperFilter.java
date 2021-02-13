@@ -1,6 +1,6 @@
 package com.zph.programmer.springboot.filter;
 
-import com.zph.programmer.api.enums.RestCallLogStatus;
+import com.zph.programmer.api.enums.RestCallLogStatusEnum;
 import com.zph.programmer.springboot.dao.RestCallLogRecordMapper;
 import com.zph.programmer.springboot.po.RestCallLogRecord;
 import com.zph.programmer.springboot.servlet.BodyRequestWrapper;
@@ -59,7 +59,7 @@ public class HttpServletWrapperFilter implements Filter {
                     "********************************* Request\n";
             log.info(sb);
             record.setUri(url).setMethod(httpServletRequest.getMethod()).setRequest(requestParamsBuilder.toString())
-                    .setStatus(RestCallLogStatus.Start.getCode());
+                    .setStatus(RestCallLogStatusEnum.Start.getCode());
             restCallLogRecordMapper.insert(record);
         }
         Long start = System.currentTimeMillis();

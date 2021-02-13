@@ -1,14 +1,19 @@
 package com.zph.programmer.springboot.utils;
 
 
+import com.zph.programmer.api.dto.BaseResponseDto;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 /**
  *
  */
+@Slf4j
 public class ExecutorUtil {
 
   private static final ExecutorService threadExec = Executors.newFixedThreadPool(4);
@@ -27,5 +32,32 @@ public class ExecutorUtil {
 
   public static void shutdownNow() {
     threadExec.shutdownNow();
+  }
+
+  public static <T> T executeFacade(Supplier<T> execute, String logInfo) {
+    try {
+      log.info("executeFacade begin: [{}] ", logInfo);
+      T t = execute.get();
+      log.info("executeFacade end: [{}] {}", logInfo, t);
+      return t;
+    } catch (Exception e) {
+      log.error("executeFacade error!", e);
+    }
+    return null;
+
+  }
+
+  public static <T> T executeFacadeWithResponse(Supplier<BaseResponseDto<T>> execute, String logInfo) {
+    try {
+      log.info("executeFacadeWithResponse begin: [{}]", logInfo);
+      BaseResponseDto<T> response = execute.get();
+      log.info("executeFacadeWithResponse end: [{}] {}", logInfo, response);
+      if (response != null && response.isSuccess()) {
+        return response.getData();
+      }
+    } catch (Exception e) {
+      log.error("executeFacadeWithResponse error!", e);
+    }
+    return null;
   }
 }
