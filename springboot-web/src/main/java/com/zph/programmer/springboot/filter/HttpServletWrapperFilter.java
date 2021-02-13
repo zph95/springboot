@@ -7,7 +7,6 @@ import com.zph.programmer.springboot.servlet.BodyRequestWrapper;
 import com.zph.programmer.springboot.servlet.BodyResponseWrapper;
 import com.zph.programmer.springboot.utils.SpringBeanUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
