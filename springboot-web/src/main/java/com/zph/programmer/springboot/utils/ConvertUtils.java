@@ -103,6 +103,9 @@ public class ConvertUtils {
         //Wed Mar 20 00:00:00 CST 2019
         Date date = getDateValue(day, null);
         System.out.println(date);
+        String str="[#][#][$]";
+        str=str.replaceFirst("\\$","元");
+        System.out.println(str);
     }
 
 
@@ -118,5 +121,4 @@ public class ConvertUtils {
         }
         return url;
     }
-
 }
