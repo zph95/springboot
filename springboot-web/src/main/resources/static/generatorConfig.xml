@@ -41,12 +41,18 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="rest_call_log_record" domainObjectName="RestCallLogRecord"
+       <!-- <table tableName="rest_call_log_record" domainObjectName="RestCallLogRecord"
                enableDeleteByPrimaryKey="false"
                enableUpdateByPrimaryKey="true"
                enableSelectByPrimaryKey="true"
                enableInsert="true">
             <columnOverride column="cost_time" javaType="Long"/>
+        </table>-->
+        <table tableName="user_info" domainObjectName="UserInfo"
+               enableDeleteByPrimaryKey="false"
+               enableUpdateByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               enableInsert="true">
         </table>
 
     </context>

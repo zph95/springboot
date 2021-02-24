@@ -31,5 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-/log/SpringBootDemo/SpringBootDemo_detail.log
-/log/SpringBootDemo/SpringBootDemo_error.log
+/log/
