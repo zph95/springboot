@@ -10,7 +10,7 @@
 <div class="container" style="margin-top: 60px">
 
     <div style="text-align: center; margin-top: 10%">
-        <p th:text="${username}" style="margin-top: 25px; font-size: 20px; color: crimson"></p>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]</h1>
         <form th:action="@{/logout}" method="post">
             <button style="margin-top: 20px">退出登录</button>
         </form>
