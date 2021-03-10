@@ -8,23 +8,38 @@
 <div class="panel-body">
     <h1>注册页面</h1>
     <form th:action="@{/register}" method="post">
-        <div>
-            账号: <input type="text" name="userName" id="username" placeholder="账号">
-        </div>
-        <div>
-            密码: <input type="password" class="form-control" name="userPassword" id="password" placeholder="密码">
-        </div>
+        <table>
+            <tr>
+                <td>用户名:</td>
+                <td><input id="userName" name="userName" placeholder="用户名" type="text"/></td>
+            </tr>
+            <tr>
+                <td>真实姓名:</td>
+                <td><input id="realName" name="realName" placeholder="真实姓名" type="text"/></td>
+            </tr>
+            <tr>
+                <td>密码:</td>
+                <td><input class="form-control" id="userPassword" name="userPassword" placeholder="密码" type="password"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-primary btn-block" type="submit">注册</button>
+                    <a href="/login">返回登录页面</a>
+                </td>
+            </tr>
+        </table>
         <br>
         <div th:if="${param.error}">
-            <p>注册失败，账号已存在！</p>
+            <p>注册失败！</p>
+            <div td th:errors="*{userName}" th:if="${#fields.hasErrors('userName')}">
+                用户名错误</td>
+            </div>
         </div>
         <div th:if="${param.success}">
             <p>注册成功，可以登录了！</p>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary btn-block">注册</button>
-            <a href="/login">返回登录页面</a>
-        </div>
+
     </form>
 </div>
 

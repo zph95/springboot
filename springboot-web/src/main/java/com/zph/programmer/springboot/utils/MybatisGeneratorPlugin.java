@@ -1,5 +1,6 @@
 package com.zph.programmer.springboot.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -9,9 +10,11 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 public class MybatisGeneratorPlugin extends PluginAdapter {
     @Override
     public boolean validate(List<String> list) {
@@ -25,6 +28,7 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
         //添加domain的注解
         topLevelClass.addAnnotation("@Data");
 
+        topLevelClass.addImportedType("javax.validation.constraints.*");
         //添加Accessors的import
         topLevelClass.addImportedType("lombok.experimental.Accessors");
         //添加的注解
@@ -51,13 +55,28 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
 
     @Override
     public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        //获取列长度
+        int length = introspectedColumn.getLength();
+        int scale = introspectedColumn.getScale();
+        log.info(introspectedColumn.getActualColumnName() + ": length=" + length + ";scale= " + scale);
         // 获取列注释
         String remarks = introspectedColumn.getRemarks();
         field.addJavaDocLine("/**");
         field.addJavaDocLine(" * " + remarks);
         field.addJavaDocLine(" */");
+        if (introspectedColumn.isStringColumn()) {
+            length = introspectedColumn.getLength();
+            field.addAnnotation("@Size(max = " + length + ")");
+        }
+        if (!introspectedColumn.isNullable()) {
+            field.addAnnotation("@NotNull");
+        }
+        if (introspectedColumn.getJdbcTypeName().equals("DECIMAL")) {
+            field.addAnnotation("@Digits(integer = " + length + ",fraction = " + scale + ")");
+        }
         return true;
     }
+
     @Override
     public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
         //不生成getter
@@ -72,13 +91,15 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapGenerated(GeneratedXmlFile sqlMap, IntrospectedTable introspectedTable) {
-        sqlMap.setMergeable(false);//覆盖xml
+        sqlMap.setMergeable(true);//覆盖xml
         return super.sqlMapGenerated(sqlMap, introspectedTable);
     }
+
     @Override
     public boolean clientSelectAllMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         return false;//去掉selectAll
     }
+
     @Override
     public boolean sqlMapSelectAllElementGenerated(XmlElement var1, IntrospectedTable var2){
         return false;//去掉selectAll

@@ -1,8 +1,9 @@
 package com.zph.programmer.springboot.controller;
 
-import com.zph.programmer.springboot.po.UserInfo;
+import com.zph.programmer.api.dto.UserInfoDto;
 import com.zph.programmer.springboot.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,8 @@ public class UserInfoCtrl{
     private UserInfoService userInfoService;
 
     @PostMapping("/register")
-    public void doRegister(UserInfo userInfo, HttpServletResponse response) throws IOException {
-        boolean insert = userInfoService.insert(userInfo);
+    public void doRegister(@Validated UserInfoDto userInfoDto, HttpServletResponse response) throws IOException {
+        boolean insert = userInfoService.insert(userInfoDto);
         if (insert) {
             response.sendRedirect("sign?success");
         } else {

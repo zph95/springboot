@@ -9,7 +9,7 @@ public class BaseResponseDto<T> {
 
     private final static  String success="success";
 
-    private final static  String fail="fail";
+    private final static String Fail = "fail";
 
     private final static  String error="error";
 
@@ -53,7 +53,7 @@ public class BaseResponseDto<T> {
     }
 
     public static <T> BaseResponseDto<T> fail(Integer code, String message, T data) {
-        return new BaseResponseDto<>(code, fail, message, data);
+        return new BaseResponseDto<>(code, Fail, message, data);
     }
 
     public static <T> BaseResponseDto<T> error(Integer code, String message, T data) {

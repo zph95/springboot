@@ -6,15 +6,17 @@ package com.zph.programmer.springboot.service;
  * @Version 1.0
  */
 
+import com.zph.programmer.api.dto.UserInfoDto;
 import com.zph.programmer.springboot.dao.UserInfoMapper;
 import com.zph.programmer.springboot.po.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 /**
  * service业务层
- * 2018-12-10 16:37
  */
 @Service
 public class UserInfoService {
@@ -33,14 +35,18 @@ public class UserInfoService {
      * @param userInfo
      * @return
      */
-    public boolean insert(UserInfo userInfo) {
-        UserInfo userInfo1 = userInfoMapper.selectByUserName(userInfo.getUserName());
-        if (userInfo1 != null){
+    public boolean insert(UserInfoDto dto) {
+        UserInfo userInfo1 = userInfoMapper.selectByUserName(dto.getUserName());
+        if (userInfo1 != null) {
             return false;
         }
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(dto.getUserName());
+        userInfo.setRealName(dto.getRealName());
+        userInfo.setUserUuid(UUID.randomUUID().toString());
         // 加密保存密码到数据库
         userInfo.setUserRoles(USER);
-        userInfo.setUserPassword(new BCryptPasswordEncoder().encode(userInfo.getUserPassword()));
+        userInfo.setUserPassword(new BCryptPasswordEncoder().encode(dto.getUserPassword()));
         int result = userInfoMapper.insert(userInfo);
         return result == 1;
     }
