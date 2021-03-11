@@ -3,12 +3,14 @@ package com.zph.programmer.springboot.exception;
 
 import com.zph.programmer.api.dto.BaseResponseDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
@@ -44,7 +46,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BaseResponseDto<String> resolveConstraintViolationException(ConstraintViolationException ex) {
 
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
@@ -57,7 +59,7 @@ public class GlobalExceptionHandler {
      * 方法参数校验
      */
     @ExceptionHandler(value = {BindException.class, ValidationException.class, MethodArgumentNotValidException.class})
-    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BaseResponseDto<String> handleParameterVerificationException(Exception e) {
         log.error(" handleParameterVerificationException has been invoked", e);
         String msg = null;
