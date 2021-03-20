@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 @Slf4j
-public class SpringBootLogTest  extends SpringBootApplicationTests {
+public class SpringBootLogTest extends SpringBootApplicationTest {
     @Autowired
     private TestService testService;
     @Autowired
