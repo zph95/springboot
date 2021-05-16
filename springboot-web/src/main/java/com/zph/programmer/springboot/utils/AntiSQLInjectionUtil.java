@@ -62,6 +62,10 @@ public class AntiSQLInjectionUtil {
             outStr = AntiSQLInjectionUtil.filter(str);
         }
         System.out.println(outStr);
+
+        String checkString = "select * from user where name='admin'";
+        String result = AntiSQLInjectionUtil.filter(checkString);
+        System.out.println(result);
     }
 
 }
