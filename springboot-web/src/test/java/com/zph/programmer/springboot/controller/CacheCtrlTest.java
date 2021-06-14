@@ -1,6 +1,6 @@
 package com.zph.programmer.springboot.controller;
 
-import com.zph.programmer.springboot.SpringBootApplicationTest;
+import com.zph.programmer.springboot.BaseTest;
 import com.zph.programmer.springboot.cache.CacheService;
 import com.zph.programmer.springboot.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
-public class CacheCtrlTest extends SpringBootApplicationTest {
+public class CacheCtrlTest extends BaseTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;

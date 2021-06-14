@@ -1,0 +1,13 @@
+{
+  "id": 13,
+  "userId": null,
+  "method": "GET",
+  "uri": "http://127.0.0.1:8180/v2/api-docs",
+  "request": "",
+  "response": "",
+  "status": 200,
+  "costTime": 385,
+  "isValid": 1,
+  "createdTime": "2021-06-14 16:44:03",
+  "modifiedTime": "2021-06-14 16:44:03"
+}

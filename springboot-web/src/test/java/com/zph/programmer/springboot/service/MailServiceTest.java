@@ -1,10 +1,10 @@
 package com.zph.programmer.springboot.service;
 
-import com.zph.programmer.springboot.SpringBootApplicationTest;
+import com.zph.programmer.springboot.BaseTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MailServiceTest extends SpringBootApplicationTest {
+public class MailServiceTest extends BaseTest {
 
     /**
      * 注入发送邮件的接口

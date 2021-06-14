@@ -1,15 +1,19 @@
-package com.zph.programmer.springboot;
+package com.zph.programmer.springboot.service;
 
-import com.zph.programmer.springboot.service.TestService;
+import com.zph.programmer.springboot.BaseUnitilsTest;
+import com.zph.programmer.springboot.po.RestCallLogRecord;
+import com.zph.programmer.springboot.utils.jsoncomparer.JsonComparator;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.Test;
+import org.unitils.dbunit.annotation.DataSet;
 
+import javax.annotation.Resource;
 
 @Slf4j
-public class SpringBootLogTest extends SpringBootApplicationTest {
-    @Autowired
+public class TestServiceTest extends BaseUnitilsTest {
+    @Resource
     private TestService testService;
+
 
     @Test
     public void logTest() {
@@ -34,6 +38,17 @@ public class SpringBootLogTest extends SpringBootApplicationTest {
         }
     }
 
+    /**
+     * dbunit need junit4 test
+     */
+    @Test
+    @DataSet("rest_call_log_record.init.xml")
+    public void findRestLogById() {
+
+        RestCallLogRecord record = testService.findRestLogById(13);
+        JsonComparator.newInstance("com/zph/programmer/springboot/service/findRestLogById.expected.json").compareAssert(record);
+
+    }
 
 
 }

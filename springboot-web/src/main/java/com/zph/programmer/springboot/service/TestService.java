@@ -1,8 +1,10 @@
 package com.zph.programmer.springboot.service;
+
+import com.zph.programmer.springboot.annotation.PointLog;
 import com.zph.programmer.springboot.dao.RestCallLogRecordMapper;
+import com.zph.programmer.springboot.po.RestCallLogRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import com.zph.programmer.springboot.annotation.PointLog;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -12,17 +14,22 @@ import java.util.Map;
 @Component
 public class TestService {
 
+    @Resource
+    private RestCallLogRecordMapper restCallLogRecordMapper;
 
     @PointLog("测试注解@PointLog")
-    public Map<String,String> testPointLog(String param) throws Exception{
-        if(param==null){
+    public Map<String, String> testPointLog(String param) throws Exception {
+        if (param == null) {
             throw new Exception("参数为空");
-        }
-        else{
+        } else {
             log.info("param={}", param);
-            Map<String,String> result=new HashMap<>();
-            result.put("200","success");
+            Map<String, String> result = new HashMap<>();
+            result.put("200", "success");
             return result;
         }
+    }
+
+    public RestCallLogRecord findRestLogById(Integer id) {
+        return restCallLogRecordMapper.selectByPrimaryKey(id);
     }
 }
