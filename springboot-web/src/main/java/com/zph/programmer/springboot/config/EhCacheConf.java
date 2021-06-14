@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-/**
- * Created by songshuaijin  on 2020/1/19
- */
 @Configuration
 public class EhCacheConf {
     @Bean

@@ -26,7 +26,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("springboot")
-                .description("FIQS HTTP-API")
+                .description("swagger HTTP-API")
                 .termsOfServiceUrl("https://zph-programmer.github.io/")
                 .version("1.0")
                 .build();

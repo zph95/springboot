@@ -1,19 +1,15 @@
 package com.zph.programmer.springboot;
 
-import com.zph.programmer.springboot.cache.CacheService;
 import com.zph.programmer.springboot.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 
 @Slf4j
 public class SpringBootLogTest extends SpringBootApplicationTest {
     @Autowired
     private TestService testService;
-    @Qualifier("ehcache")
-    @Autowired
-    private CacheService cacheService;
 
     @Test
     public void logTest() {
