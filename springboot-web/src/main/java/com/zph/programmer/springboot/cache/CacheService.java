@@ -1,5 +1,6 @@
 package com.zph.programmer.springboot.cache;
 
+import com.zph.programmer.springboot.exception.CacheException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,10 @@ public interface CacheService {
         private String value;
     }
 
-    String get(String key)throws Exception;
+    String get(String key) throws CacheException;
 
-    void set(String key,String value)throws Exception;
+    void set(String key, String value, int second) throws CacheException;
 
-    void del(String key)throws Exception;
+    void del(String key) throws CacheException;
 
 }

@@ -24,7 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/index").permitAll() // permitAll被允许访问
+                .antMatchers("/", "/index", "/test").permitAll() // permitAll被允许访问
+                .antMatchers("/swagger-ui.html").permitAll() // 任意访问
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/user/**").hasRole("USER")// 指定所有user页面需要USER角色才能访问
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/user")
