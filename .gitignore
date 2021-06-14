@@ -37,3 +37,5 @@ build/
 
 *.log
 
+springboot-web/resources/xsd/dataset.xsd
+springboot-web/resources/xsd/PUBLIC.xsd
