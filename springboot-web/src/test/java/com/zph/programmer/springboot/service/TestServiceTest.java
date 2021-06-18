@@ -6,6 +6,7 @@ import com.zph.programmer.springboot.utils.jsoncomparer.JsonComparator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.unitils.dbunit.annotation.DataSet;
+import org.unitils.dbunit.annotation.ExpectedDataSet;
 
 import javax.annotation.Resource;
 
@@ -42,13 +43,12 @@ public class TestServiceTest extends BaseUnitilsTest {
      * dbunit need junit4 test
      */
     @Test
-    @DataSet("rest_call_log_record.init.xml")
+    @DataSet(value = {"rest_call_log_record.init.xml"})
+    @ExpectedDataSet(value = {"rest_call_log_record.init.xml"})
     public void findRestLogById() {
 
         RestCallLogRecord record = testService.findRestLogById(13);
         JsonComparator.newInstance("com/zph/programmer/springboot/service/findRestLogById.expected.json").compareAssert(record);
 
     }
-
-
 }

@@ -1,6 +1,6 @@
 package com.zph.programmer.springboot.service;
 
-/**
+/*
  * @Author: zengpenghui
  * @Date: 2021/2/25 18:56
  * @Version 1.0
@@ -32,7 +32,7 @@ public class UserInfoService {
     /**
      * 新增用户
      *
-     * @param userInfo
+     * @param userInfoDto
      * @return
      */
     public boolean insert(UserInfoDto dto) {

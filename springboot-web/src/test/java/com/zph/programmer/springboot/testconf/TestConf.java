@@ -17,9 +17,7 @@ public class TestConf {
     }
 
     @Bean(name = "dataSource")
-    public DataSource fiqsDataSource() throws Exception {
+    public DataSource dbunitDataSource() throws Exception {
         return dataSource;
     }
-
-
 }
