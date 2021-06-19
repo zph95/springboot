@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/api/**").permitAll()
+                .antMatchers("/upload/**").permitAll()
                 .antMatchers("/user/**").hasRole("USER")// 指定所有user页面需要USER角色才能访问
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/user")
