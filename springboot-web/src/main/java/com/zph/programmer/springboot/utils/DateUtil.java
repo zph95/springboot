@@ -1,6 +1,7 @@
 package com.zph.programmer.springboot.utils;
 
 
+import java.time.ZoneOffset;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,6 +15,23 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+/**
+ * Java 中的 Unix 时间
+ * Java 确保：每天 24 小时、每小时 60 分、每分钟 60 秒。
+ * <p>
+ * Java 中获取 “当前” 时间的方法，其底层实现，全部由 java.lang.System.currentTimeMillis() 提供自 UTC 1970-01-01T00:00:00 的毫秒数。java.lang.System.currentTimeMillis() 作为 native 方法，其实现与 JVM 所在的机器相关（通常使用 NTP 协议保持更新）。
+ * <p>
+ * LocalDate、LocalTime、LocalDateTime
+ * java.time.LocalDate 用于表示 “本地日期”，无 “时间”。LocalDate 不承载时区信息。
+ * <p>
+ * java.time.LocalTime 用于表示 “本地时间”，无 “日期”。LocalTime 不承载时区信息。
+ * <p>
+ * java.time.LocalDateTime 用于表示 “本地日期与时间”。LocalDateTime 不承载时区信息。
+ * <p>
+ * LocalDate 实例与 LocalTime 实例能够共同构建 LocalDateTime 实例，由 LocalDateTime 实例能够获取 LocalDate 实例与 LocalTime 实例。
+ * <p>
+ * 由于 LocalDateTime 不承载时区信息，因此，其不能与 Instant 相互转换，必须提供时区信息。
+ */
 @Slf4j
 public class DateUtil {
 
@@ -41,66 +59,16 @@ public class DateUtil {
         System.out.println(getNow());
     }
 
-    /**
-     * 获取整型日期
-     *
-     * @return result
-     */
-    public static int getNow() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        return Integer.parseInt(format.format(calendar.getTime()));
+    public static LocalDateTime getNow() {
+        ZoneId zoneId = ZoneId.ofOffset("UTC", ZoneOffset.of("+0"));
+        LocalDateTime now = LocalDateTime.now(zoneId);;
+        System.out.println(now);
+
+        ZonedDateTime convertTime = ZonedDateTime.now(zoneId);
+        System.out.println(convertTime);
+        return convertTime.toLocalDateTime();
     }
 
-    /**
-     * 获取整型日期
-     *
-     * @return result
-     */
-    public static String getNowDate() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        return format.format(calendar.getTime());
-    }
-
-    /**
-     * 计算两个日期之间相差的天数
-     *
-     * @param startDate 较小的时间
-     * @param endDate   较大的时间
-     * @return 相差天数
-     * @throws ParseException ParseException
-     */
-    public static int daysBetween(Date startDate, Date endDate) throws ParseException {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startDate);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        long time1 = cal.getTimeInMillis();
-        cal.setTime(endDate);
-        cal.set(Calendar.HOUR_OF_DAY, 23);
-        cal.set(Calendar.MINUTE, 59);
-        cal.set(Calendar.SECOND, 59);
-        long time2 = cal.getTimeInMillis();
-        Long betweenDays = (time2 - time1) / (1000 * 3600 * 24) + 1;
-        return betweenDays.intValue();
-    }
-
-    /**
-     * 获取去年的今天
-     *
-     * @return result
-     */
-    public static String getLastYearDate() {
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        c.setTime(new Date());
-        c.add(Calendar.YEAR, -1);
-        Date y = c.getTime();
-        String dayYear = format.format(y);
-        return dayYear;
-    }
 
     /**
      * 时间戳转 date

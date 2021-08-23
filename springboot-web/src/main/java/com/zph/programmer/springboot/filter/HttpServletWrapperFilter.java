@@ -45,7 +45,7 @@ public class HttpServletWrapperFilter implements Filter {
             StringBuilder requestParamsBuilder = new StringBuilder();
             if (httpServletRequest.getQueryString() != null) {
                 //针对param入参
-                requestParamsBuilder.append(URLDecoder.decode(httpServletRequest.getQueryString(), StandardCharsets.UTF_8));
+                requestParamsBuilder.append(URLDecoder.decode(httpServletRequest.getQueryString(), StandardCharsets.UTF_8.toString()));
             } else {
                 //针对body入参
                 requestParamsBuilder.append(requestWrapper.getBody());

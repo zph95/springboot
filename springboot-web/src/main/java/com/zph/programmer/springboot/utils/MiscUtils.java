@@ -40,36 +40,7 @@ public class MiscUtils {
         return sb.toString();
     }
 
-    public static String joinStr(String join, Map<String, String> params) {
-        return joinStr(join, params, true);
-    }
 
-    public static String joinStr(String join, Map<String, String> params,
-                                 boolean urlEncode) {
-        StringBuilder sb = new StringBuilder();
-
-        for (Entry<String, String> entry : params.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-
-            if (value == null) {
-                continue;
-            }
-
-            if (sb.length() > 0) {
-                sb.append(join);
-            }
-
-            if (urlEncode) {
-                sb.append(String.format("%s=%s", key,
-                        URLEncoder.encode(value, StandardCharsets.UTF_8)));
-            } else {
-                sb.append(String.format("%s=%s", key, value));
-            }
-        }
-
-        return sb.toString();
-    }
 
     public static String formatTime(String format) {
         return new SimpleDateFormat(format).format(new Date());
