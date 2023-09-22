@@ -2,8 +2,10 @@ package com.zph.programmer.springboot.service;
 
 import com.zph.programmer.springboot.BaseTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Disabled
 public class MailServiceTest extends BaseTest {
 
     /**

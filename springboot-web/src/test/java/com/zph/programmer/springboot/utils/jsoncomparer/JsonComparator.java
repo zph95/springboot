@@ -298,8 +298,7 @@ public class JsonComparator {
      * @param key
      * @return
      */
-    private List<FieldCompareResult> compare(JsonNode source, JsonNode target,
-                                             String key) {
+    private List<FieldCompareResult> compare(JsonNode source, JsonNode target, String key) {
         JsonNodeType nodeType = source.getNodeType();
         List<FieldCompareResult> results = new ArrayList<FieldCompareResult>();
 
@@ -344,9 +343,7 @@ public class JsonComparator {
      * @param strategies
      * @return
      */
-    private JsonNode findMatchNode(JsonNode sourceNode,
-                                   List<JsonNode> targetList,
-                                   List<String> strategies) {
+    private JsonNode findMatchNode(JsonNode sourceNode, List<JsonNode> targetList, List<String> strategies) {
 
         for (JsonNode targetNode : targetList) {
             if (isMatch(sourceNode, targetNode, strategies)) {
@@ -510,8 +507,7 @@ public class JsonComparator {
      * @param target
      * @return
      */
-    private List<FieldCompareResult> compareObjectNode(JsonNode source,
-                                                       JsonNode target) {
+    private List<FieldCompareResult> compareObjectNode(JsonNode source, JsonNode target) {
         List<FieldCompareResult> result = new ArrayList<FieldCompareResult>();
         List<String> sourceKeys = this.getIteratorData(source.fieldNames());
         List<String> targetKeys = this.getIteratorData(target.fieldNames());
@@ -542,9 +538,7 @@ public class JsonComparator {
      * @param targetArray
      * @return
      */
-    private List<FieldCompareResult> compareArray(JsonNode sourceArray,
-                                                  JsonNode targetArray,
-                                                  String key) {
+    private List<FieldCompareResult> compareArray(JsonNode sourceArray, JsonNode targetArray, String key) {
 
         List<FieldCompareResult> results = new ArrayList<>();
 
