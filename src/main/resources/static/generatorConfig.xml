@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 驱动程序路径 -->
+    <classPathEntry location="lib/sqlite-jdbc-3.34.0.jar" />
+
+    <context id="SQLiteTables" targetRuntime="MyBatis3Simple">
+
+        <plugin type="com.zph.programmer.springboot.utils.MybatisGeneratorPlugin"/>
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="false"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <jdbcConnection driverClass="org.sqlite.JDBC"
+                        connectionURL="jdbc:sqlite:src/main/resources/static/sqlite/sqlite.db"
+                        userId=""
+                        password="">
+            <property name="useInformationSchema" value="true" />
+        </jdbcConnection>
+        <javaTypeResolver >
+            <property name="useJSR310Types" value="true"/>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.zph.programmer.springdemo.po" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources/static">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zph.programmer.springdemo.dao"
+                             targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+       <!-- <table tableName="rest_call_log_record" domainObjectName="RestCallLogRecord"
+               enableDeleteByPrimaryKey="false"
+               enableUpdateByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               enableInsert="true">
+            <columnOverride column="cost_time" javaType="Long"/>
+        </table>-->
+        <table tableName="user_info" domainObjectName="UserInfo"
+               enableDeleteByPrimaryKey="false"
+               enableUpdateByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               enableInsert="true">
+        </table>
+
+    </context>
+</generatorConfiguration>
