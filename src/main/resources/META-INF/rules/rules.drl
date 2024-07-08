@@ -1,0 +1,10 @@
+package rules;
+
+import java.lang.System;
+
+rule "Example Rule"
+when
+     // 条件
+then
+    System.out.println("Hello drools World!"); // 动作
+end

@@ -56,7 +56,7 @@
     <!-- TRACE < DEBUG < INFO < WARN < ERROR  -->
     <logger name="org.springframework" level="INFO"/>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="detailAppender"/>
         <appender-ref ref="errorAppender"/>
