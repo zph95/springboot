@@ -35,3 +35,7 @@ build/
 ### log ###
 /log/**
 *.log
+
+**/bin/**
+
+.metals/
